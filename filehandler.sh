@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# "~/Desktop/GAIA/Clients/"
+# 
 
 is_wsl() {
     if grep -qE "(Microsoft|WSL)" /proc/version &> /dev/null; then
@@ -28,12 +28,9 @@ get_os() {
     fi
 }
 
-fixedpath="/mnt/d/dev/test/Clients"
-pathshortcut="/mnt/d/dev/test2"
-# if find $fixedpath -name $1 -type d
-# then
-# mkdir "$pathshortcut"/short
-rm -R $pathshortcut/short/*
+fixedpath="~/Desktop/GAIA/Clients"
+pathshortcut="~/Desktop/GAIA/Clients/temps"
+# rm -R $pathshortcut/short/*
 for i in $(find $fixedpath -name $1); do # Not recommended, will break on whitespace
     result=$(echo "$i" | sed "s|$fixedpath||g")
     result=$(echo "$result" | sed "s|/|_|g")
