@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# 
-
 is_wsl() {
     if grep -qE "(Microsoft|WSL)" /proc/version &> /dev/null; then
         return 0
@@ -10,21 +8,20 @@ is_wsl() {
     fi
 }
 
-
 get_os() {
     os_type=$(uname)
 
     if [ "$os_type" == "Darwin" ]; then
-        return "mac"
+        echo "mac"
 
     elif [ "$os_type" == "Linux" ]; then
         if is_wsl; then
-            return "wsl"
+            echo "wsl"
         else 
-            return "linux"
+            echo "linux"
         fi
     else
-        return $os_type
+        echo $os_type
     fi
 }
 
@@ -37,7 +34,7 @@ for i in $(find $fixedpath -name $1); do # Not recommended, will break on whites
     newfolder="$pathshortcut/short/$result"
     mkdir $newfolder
 
-    if [ $(get_os) == "mac" ]; then
+    if [ $(get_os) = "mac" ]; then
         osascript -e "
         set originalFolderAlias to POSIX file $i as alias
         set destinationFolderAlias to POSIX file $newfolder as alias
@@ -48,14 +45,12 @@ for i in $(find $fixedpath -name $1); do # Not recommended, will break on whites
     fi
 done
 
-os=$(get_os)
-
-if [ "$os" == "mac" ]; then
+if [ $(get_os) = "mac" ]; then
     open $pathshortcut/short
 
-elif [ "$os" == "linux" ]; then
+elif [ "$os" = "linux" ]; then
     cd $pathshortcut/short
 
-elif [ "$os" == "wsl" ]; then
+elif [ "$os" = "wsl" ]; then
     explorer.exe `wslpath -w "$pathshortcut/short"`
 fi
