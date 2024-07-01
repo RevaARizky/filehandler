@@ -42,6 +42,8 @@ for i in $(find $fixedpath -name $1); do # Not recommended, will break on whites
             make new alias to originalFolderAlias at destinationFolderAlias
         end tell
         "
+    elif ["$(get_os)" = "wsl"]; then
+        ln -s $i $newfolder
     fi
 done
 
