@@ -34,7 +34,7 @@ for i in $(find $fixedpath -name $1); do # Not recommended, will break on whites
     newfolder="$pathshortcut/short/$result"
     mkdir $newfolder
 
-    if [ $(get_os) = "mac" ]; then
+    if [ "$(get_os)" = "mac" ]; then
         osascript -e "
         set originalFolderAlias to POSIX file $i as alias
         set destinationFolderAlias to POSIX file $newfolder as alias
@@ -45,12 +45,12 @@ for i in $(find $fixedpath -name $1); do # Not recommended, will break on whites
     fi
 done
 
-if [ $(get_os) = "mac" ]; then
+if [ "$(get_os)" = "mac" ]; then
     open $pathshortcut/short
 
-elif [ "$os" = "linux" ]; then
+elif [ "$(get_os)" = "linux" ]; then
     cd $pathshortcut/short
 
-elif [ "$os" = "wsl" ]; then
+elif [ "$(get_os)" = "wsl" ]; then
     explorer.exe `wslpath -w "$pathshortcut/short"`
 fi
